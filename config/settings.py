@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     # Приложения пользователя
     'shop',
+    'catalog',
 ]
 
 MIDDLEWARE = [
