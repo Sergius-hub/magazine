@@ -7,28 +7,34 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('catalog', '0001_initial'),
+        ("catalog", "0001_initial"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='category',
-            name='description',
-            field=models.TextField(blank=True, verbose_name='Описание'),
+            model_name="category",
+            name="description",
+            field=models.TextField(blank=True, verbose_name="Описание"),
         ),
         migrations.AlterField(
-            model_name='product',
-            name='category',
-            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='products', to='catalog.category'),
+            model_name="product",
+            name="category",
+            field=models.ForeignKey(
+                on_delete=django.db.models.deletion.CASCADE,
+                related_name="products",
+                to="catalog.category",
+            ),
         ),
         migrations.AlterField(
-            model_name='product',
-            name='description',
-            field=models.TextField(blank=True, verbose_name='Описание'),
+            model_name="product",
+            name="description",
+            field=models.TextField(blank=True, verbose_name="Описание"),
         ),
         migrations.AlterField(
-            model_name='product',
-            name='price',
-            field=models.DecimalField(decimal_places=2, default=0.0, max_digits=10, verbose_name='Цена'),
+            model_name="product",
+            name="price",
+            field=models.DecimalField(
+                decimal_places=2, default=0.0, max_digits=10, verbose_name="Цена"
+            ),
         ),
     ]
