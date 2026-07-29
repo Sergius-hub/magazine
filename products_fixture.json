@@ -1,0 +1,106 @@
+[
+{
+    "model": "catalog.product",
+    "pk": 1,
+    "fields": {
+        "category": 5,
+        "name": "Ручка",
+        "description": "",
+        "image": "",
+        "price": "10.00",
+        "created_at": "2026-07-27T11:32:57.639Z",
+        "updated_at": "2026-07-27T11:32:57.639Z"
+    }
+},
+{
+    "model": "catalog.product",
+    "pk": 2,
+    "fields": {
+        "category": 5,
+        "name": "Карандаш",
+        "description": "",
+        "image": "",
+        "price": "5.00",
+        "created_at": "2026-07-27T11:44:53.239Z",
+        "updated_at": "2026-07-27T11:44:53.239Z"
+    }
+},
+{
+    "model": "catalog.product",
+    "pk": 3,
+    "fields": {
+        "category": 6,
+        "name": "Клавиатура",
+        "description": "",
+        "image": "",
+        "price": "300.00",
+        "created_at": "2026-07-27T12:20:50.719Z",
+        "updated_at": "2026-07-27T12:20:50.719Z"
+    }
+},
+{
+    "model": "catalog.product",
+    "pk": 4,
+    "fields": {
+        "category": 6,
+        "name": "Мышь",
+        "description": "",
+        "image": "",
+        "price": "400.00",
+        "created_at": "2026-07-27T12:27:21.895Z",
+        "updated_at": "2026-07-27T12:27:21.895Z"
+    }
+},
+{
+    "model": "catalog.product",
+    "pk": 5,
+    "fields": {
+        "category": 6,
+        "name": "Монитор",
+        "description": "",
+        "image": "",
+        "price": "500.00",
+        "created_at": "2026-07-27T12:27:32.799Z",
+        "updated_at": "2026-07-27T12:27:32.799Z"
+    }
+},
+{
+    "model": "catalog.product",
+    "pk": 6,
+    "fields": {
+        "category": 7,
+        "name": "Блокнот",
+        "description": "",
+        "image": "",
+        "price": "25.00",
+        "created_at": "2026-07-27T14:48:26.142Z",
+        "updated_at": "2026-07-27T14:48:26.142Z"
+    }
+},
+{
+    "model": "catalog.product",
+    "pk": 7,
+    "fields": {
+        "category": 7,
+        "name": "Бумага",
+        "description": "",
+        "image": "",
+        "price": "30.00",
+        "created_at": "2026-07-27T14:48:40.502Z",
+        "updated_at": "2026-07-27T14:48:40.502Z"
+    }
+},
+{
+    "model": "catalog.product",
+    "pk": 8,
+    "fields": {
+        "category": 7,
+        "name": "Стикеры",
+        "description": "",
+        "image": "",
+        "price": "7.00",
+        "created_at": "2026-07-27T14:48:55.761Z",
+        "updated_at": "2026-07-27T14:48:55.761Z"
+    }
+}
+]
