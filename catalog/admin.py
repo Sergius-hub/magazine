@@ -13,9 +13,13 @@ class CategoryAdmin(admin.ModelAdmin):
 
 @admin.register(Product)
 class ProductAdmin(admin.ModelAdmin):
-    list_display = ("created_at", "category", "name", "description", "price", "image")
+    list_display = ("name", "formatted_date", "category", "description", "price", "image")
     list_filter = ("category",)
     search_fields = (
         "name",
         "description",
     )
+
+    @admin.display( description='Дата создания', ordering='created_at' )
+    def formatted_date( self, obj ):
+        return obj.created_at.strftime( '%d.%m.%Y %H:%M' )
