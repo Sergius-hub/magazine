@@ -142,3 +142,22 @@ class Command( BaseCommand ):
 
         self.stdout.write( self.style.SUCCESS( '✅ Таблицы очищены' ) )
 ```
+
+
+9) Базовый шаблон:
+Контент
+```HTML
+{% block content %}
+    ...
+{% endblock %}
+```
+
+Меню
+```HTML
+{% include 'includes/inc_menu.html' %}
+```
+
+Футер
+```HTML
+{% include 'includes/inc_footer.html' %}
+```
