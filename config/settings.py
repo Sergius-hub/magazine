@@ -42,7 +42,17 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     # Приложения пользователя
     'catalog',
+    'easy_thumbnails',
 ]
+
+# Настройки для картинок
+THUMBNAIL_ALIASES = {
+    '': {
+        'small': {'size': (150, 150), 'crop': True},
+        'medium': {'size': (300, 300), 'crop': True},
+        'large': {'size': (800, 800), 'crop': True},
+    },
+}
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',

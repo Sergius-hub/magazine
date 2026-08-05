@@ -3,104 +3,52 @@
     "model": "catalog.product",
     "pk": 1,
     "fields": {
-        "category": 5,
-        "name": "Ручка",
-        "description": "",
-        "image": "",
-        "price": "10.00",
-        "created_at": "2026-07-27T11:32:57.639Z",
-        "updated_at": "2026-07-27T11:32:57.639Z"
+        "category": 1,
+        "name": "Ручка STAFF",
+        "description": "Шариковая ручка",
+        "image": "images/aa82b04e61b428df3dc47341377c85cf_xl.jpg",
+        "price": "5.00",
+        "created_at": "2026-08-01T19:38:26.911Z",
+        "updated_at": "2026-08-02T18:37:37.252Z"
     }
 },
 {
     "model": "catalog.product",
     "pk": 2,
     "fields": {
-        "category": 5,
+        "category": 1,
         "name": "Карандаш",
-        "description": "",
-        "image": "",
-        "price": "5.00",
-        "created_at": "2026-07-27T11:44:53.239Z",
-        "updated_at": "2026-07-27T11:44:53.239Z"
+        "description": "Чернографитный карандаш",
+        "image": "images/d45626930c3521650920ace38e0eaac0_xl.jpg",
+        "price": "7.00",
+        "created_at": "2026-08-01T19:38:26.915Z",
+        "updated_at": "2026-08-02T18:42:04.795Z"
     }
 },
 {
     "model": "catalog.product",
     "pk": 3,
     "fields": {
-        "category": 6,
-        "name": "Клавиатура",
-        "description": "",
-        "image": "",
-        "price": "300.00",
-        "created_at": "2026-07-27T12:20:50.719Z",
-        "updated_at": "2026-07-27T12:20:50.719Z"
+        "category": 1,
+        "name": "Ластик BRAUBERG",
+        "description": "Ластик BRAUBERG предназначен для удаления надписей, сделанных чернографитными карандашами.",
+        "image": "images/0b74eb252f64622786da0732fe899a73_xl.jpg",
+        "price": "3.00",
+        "created_at": "2026-08-01T19:38:26.916Z",
+        "updated_at": "2026-08-02T18:45:45.033Z"
     }
 },
 {
     "model": "catalog.product",
     "pk": 4,
     "fields": {
-        "category": 6,
-        "name": "Мышь",
-        "description": "",
-        "image": "",
-        "price": "400.00",
-        "created_at": "2026-07-27T12:27:21.895Z",
-        "updated_at": "2026-07-27T12:27:21.895Z"
-    }
-},
-{
-    "model": "catalog.product",
-    "pk": 5,
-    "fields": {
-        "category": 6,
-        "name": "Монитор",
-        "description": "",
-        "image": "",
-        "price": "500.00",
-        "created_at": "2026-07-27T12:27:32.799Z",
-        "updated_at": "2026-07-27T12:27:32.799Z"
-    }
-},
-{
-    "model": "catalog.product",
-    "pk": 6,
-    "fields": {
-        "category": 7,
-        "name": "Блокнот",
-        "description": "",
-        "image": "",
-        "price": "25.00",
-        "created_at": "2026-07-27T14:48:26.142Z",
-        "updated_at": "2026-07-27T14:48:26.142Z"
-    }
-},
-{
-    "model": "catalog.product",
-    "pk": 7,
-    "fields": {
-        "category": 7,
-        "name": "Бумага",
-        "description": "",
-        "image": "",
-        "price": "30.00",
-        "created_at": "2026-07-27T14:48:40.502Z",
-        "updated_at": "2026-07-27T14:48:40.502Z"
-    }
-},
-{
-    "model": "catalog.product",
-    "pk": 8,
-    "fields": {
-        "category": 7,
-        "name": "Стикеры",
-        "description": "",
-        "image": "",
-        "price": "7.00",
-        "created_at": "2026-07-27T14:48:55.761Z",
-        "updated_at": "2026-07-27T14:48:55.761Z"
+        "category": 1,
+        "name": "Тетрадь бумвинил",
+        "description": "Удобная, практичная тетрадь STAFF для учебы и работы. Внутренний блок из офсетной бумаги.",
+        "image": "images/4b26b7e33a912ba85cc4d1ee3b4cbc08_xl.jpg",
+        "price": "37.83",
+        "created_at": "2026-08-02T18:50:02.988Z",
+        "updated_at": "2026-08-02T18:50:02.988Z"
     }
 }
 ]

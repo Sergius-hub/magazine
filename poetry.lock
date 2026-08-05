@@ -145,6 +145,25 @@ argon2 = ["argon2-cffi (>=23.1.0)"]
 bcrypt = ["bcrypt (>=4.1.1)"]
 
 [[package]]
+name = "easy-thumbnails"
+version = "2.10.1"
+description = "Easy thumbnails for Django"
+optional = false
+python-versions = ">=3.9"
+groups = ["main"]
+files = [
+    {file = "easy_thumbnails-2.10.1-py3-none-any.whl", hash = "sha256:24462d63dd31543ef1585538b2bfefe0db96d3409bb431c70b81548fb2cfc5be"},
+    {file = "easy_thumbnails-2.10.1.tar.gz", hash = "sha256:a50aa5f99387546c35ab5ba1ea9b3cbbc5658e65601cd34949f62137c32c222e"},
+]
+
+[package.dependencies]
+django = ">=4.2"
+pillow = "*"
+
+[package.extras]
+svg = ["reportlab", "svglib"]
+
+[[package]]
 name = "executing"
 version = "2.2.1"
 description = "Get the currently executing AST node of a frame, and other information"
@@ -755,4 +774,4 @@ files = [
 [metadata]
 lock-version = "2.1"
 python-versions = ">=3.14"
-content-hash = "e9681b0133d1f22ecd4331b8874695a2a96c071cd9930347d28d9b876d94e9c8"
+content-hash = "d3f4fc9ef2cb1938b43d0e09cf189dceb7b2e0044019501155fd187bc9f636e5"

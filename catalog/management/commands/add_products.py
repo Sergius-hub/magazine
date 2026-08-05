@@ -15,9 +15,9 @@ class Command(BaseCommand):
         )
 
         products = [
-            {"name": "Ручка", "category": category, "price": 5.00},
-            {"name": "Карандаш", "category": category, "price": 7.00},
-            {"name": "Стёрка", "category": category, "price": 3.00},
+            {"name": "Ручка", "description": "Шариковая ручка", "category": category, "price": 5.00},
+            {"name": "Карандаш", "description": "Деревянный карандаш", "category": category, "price": 7.00},
+            {"name": "Стёрка", "description": "Резиновая стерка", "category": category, "price": 3.00},
         ]
 
         for product_data in products:
