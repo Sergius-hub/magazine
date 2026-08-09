@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     # Приложения пользователя
     'catalog',
     'easy_thumbnails',
+    'blog',
 ]
 
 # Настройки для картинок
