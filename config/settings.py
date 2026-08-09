@@ -52,6 +52,7 @@ THUMBNAIL_ALIASES = {
         'small': {'size': (150, 150), 'crop': True},
         'medium': {'size': (300, 300), 'crop': True},
         'large': {'size': (800, 800), 'crop': True},
+        'big': {'size': (1000, 1000), 'crop': True},
     },
 }
 
@@ -70,7 +71,7 @@ ROOT_URLCONF = 'config.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [BASE_DIR / 'templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [

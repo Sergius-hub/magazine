@@ -1,0 +1,25 @@
+{% extends 'blog/base.html' %}
+{% load thumbnail %}
+
+{% block content %}
+<div class="row" data-masonry='{"percentPosition": true }'>
+    {% for record in object_list %}
+    <div class="col-sm-6 col-lg-4 mb-4">
+        <div class="card border-0 shadow-sm">
+            <img src="{{ record.image | thumbnail_url:'large' }}" class="card-img-top" alt="..."
+                 style="width: 100%; height: auto; display: block;">
+            <div class="card-body">
+                <div class="d-flex justify-content-between align-items-center mb-2">
+                    <small class="text-muted"><i class="bi bi-calendar3"></i> {{ record.created_at }} </small>
+                    <span class="badge bg-success">Туризм</span>
+                </div>
+                <h5 class="card-title">{{ record.title }}</h5>
+                <p class="card-text text-muted">{{ record.content }}</p>
+                <a class="btn btn-lg btn-block btn-outline-primary"
+                   href="{% url 'blog:record_detail' record.pk %}">Подробнее</a>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}
