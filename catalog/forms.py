@@ -7,6 +7,50 @@ class ProductForm(forms.ModelForm):
         model = Product
         fields = ("name", "description", "image", "category", "price")
 
+        widgets = {
+            "name": forms.TextInput(
+                attrs={
+                    "class": "form-control",
+                    "placeholder": "Введите название товара",
+                }
+            ),
+
+            "description": forms.Textarea(
+                attrs={
+                    "class": "form-control",
+                    "placeholder": "Введите описание товара",
+                    "rows": 4,
+                }
+            ),
+
+            "image": forms.ClearableFileInput(
+                attrs={
+                    "class": "form-control",
+                }
+            ),
+
+            "category": forms.Select(
+                attrs={
+                    "class": "form-select",
+                }
+            ),
+
+            "price": forms.NumberInput(
+                attrs={
+                    "class": "form-control",
+                    "step": "0.01",
+                    "placeholder": "0.00",
+                }
+            ),
+        }
+
+        labels = {
+            "name": "Название",
+            "description": "Описание",
+            "image": "Изображение",
+            "category": "Категория",
+            "price": "Цена",
+        }
 
 class ContactForm(forms.Form):
 
