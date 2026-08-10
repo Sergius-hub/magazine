@@ -1,12 +1,12 @@
 {% extends 'blog/base.html' %}
 {% load thumbnail %}
-
+{% block skystore %}
+{% endblock %}
 {% block content %}
 <div class="row" data-masonry='{"percentPosition": true }'>
-
-    <div class="col-sm-6 col-lg-4 mb-4">
+    <div class="col">
         <div class="card border-0 shadow-sm">
-            <img src="{{ object.image | thumbnail_url:'big' }}" class="card-img-top" alt="..."
+            <img src="{{ object.image | thumbnail_url:'large' }}" class="card-img-top" alt="..."
                  style="width: 100%; height: auto; display: block;">
             <div class="card-body">
                 <div class="d-flex justify-content-between align-items-center mb-2">
@@ -20,6 +20,5 @@
             </div>
         </div>
     </div>
-
 </div>
 {% endblock %}

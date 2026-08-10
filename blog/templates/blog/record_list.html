@@ -4,7 +4,7 @@
 {% block content %}
 <div class="row" data-masonry='{"percentPosition": true }'>
     {% for record in object_list %}
-    <div class="col-sm-6 col-lg-4 mb-4">
+    <div class="col-sm-4 col-lg-6 mb-4">
         <div class="card border-0 shadow-sm">
             <img src="{{ record.image | thumbnail_url:'large' }}" class="card-img-top" alt="..."
                  style="width: 100%; height: auto; display: block;">
@@ -14,12 +14,24 @@
                     <span class="badge bg-success">Туризм</span>
                 </div>
                 <h5 class="card-title">{{ record.title }}</h5>
-                <p class="card-text text-muted">{{ record.content }}</p>
+                <p class="card-text text-muted">Просмотров: {{ record.count_views }}</p>
                 <a class="btn btn-lg btn-block btn-outline-primary"
                    href="{% url 'blog:record_detail' record.pk %}">Подробнее</a>
+                <a class="btn btn-lg btn-block btn-outline-primary"
+                   href="{% url 'blog:record_update' record.pk %}">Редактировать</a>
+                <a class="btn btn-lg btn-block btn-outline-primary"
+                   href="{% url 'blog:record_delete' record.pk %}">Удалить</a>
             </div>
         </div>
     </div>
     {% endfor %}
+</div>
+<div class="conteiner text-center">
+    <div class="row">
+        <div class="col">
+            <a class="btn btn-lg btn-block btn-outline-primary"
+               href="{% url 'blog:record_create' %}">Добавить блог</a>
+        </div>
+    </div>
 </div>
 {% endblock %}
