@@ -9,6 +9,9 @@ from .forms import RecordForm
 class RecordListView(ListView):
     model = Record
 
+    def get_queryset(self):
+        return Record.objects.filter(is_active=True)
+
 class RecordDetailView(DetailView):
     model = Record
 
