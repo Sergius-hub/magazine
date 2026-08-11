@@ -1,1 +1,10 @@
-<p>Привет {{ name }} данные успешно получены!</p>
+{% extends 'catalog/base.html' %}
+{% block content %}
+    {% if messages %}
+        {% for message in messages %}
+        <p>{{ message }}</p>
+        {% endfor %}
+    {% else %}
+        <p>Данные успешно получены!</p>
+    {% endif %}
+{% endblock %}
