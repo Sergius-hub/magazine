@@ -1,0 +1,13 @@
+  develop                 [m 3d1ed0d [[34morigin/develop[m: behind 14] Merge pull request #2 from Sergius-hub/feature_2
+  feature_1               [m 1cce762 [[34morigin/feature_1[m] fix settings
+  feature_2               [m 33562c9 [[34morigin/feature_2[m] MEDIA_ROOT, MEDIA_URL
+  feature_3               [m 790ebfa [[34morigin/feature_3[m] forms add
+* [32mfeature_4               [m f7f5a34 [[34morigin/feature_4[m] is_active
+  main                    [m ff74831 [[34morigin/main[m] poetry config
+  [31mremotes/origin/HEAD     [m -> origin/main
+  [31mremotes/origin/develop  [m da9902f Merge pull request #4 from Sergius-hub/feature_4
+  [31mremotes/origin/feature_1[m 1cce762 fix settings
+  [31mremotes/origin/feature_2[m 33562c9 MEDIA_ROOT, MEDIA_URL
+  [31mremotes/origin/feature_3[m 790ebfa forms add
+  [31mremotes/origin/feature_4[m f7f5a34 is_active
+  [31mremotes/origin/main     [m ff74831 poetry config

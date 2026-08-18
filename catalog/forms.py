@@ -1,6 +1,8 @@
 from django import forms
 from .models import Product
+from django.core.exceptions import ValidationError
 
+BLACK_LIST = ["казино", "биржа", "обман", "криптовалюта", "дешево", "полиция", "крипта", "бесплатно", "радар"]
 
 class ProductForm(forms.ModelForm):
     class Meta:
@@ -51,6 +53,24 @@ class ProductForm(forms.ModelForm):
             "category": "Категория",
             "price": "Цена",
         }
+
+    def clean_name(self):
+        name = self.cleaned_data.get("name").strip().lower()
+        if name in BLACK_LIST:
+            raise ValidationError("Недопустимое название товара")
+        return name
+
+    def clean_description(self):
+        description = self.cleaned_data.get("description").strip().lower()
+        if description in BLACK_LIST:
+            raise ValidationError("Недопустимое описание")
+        return description
+
+    def clean_price(self):
+        price = self.cleaned_data.get("price")
+        if price < 0:
+            raise ValidationError("Цена не должна быть отрицательной")
+        return price
 
 class ContactForm(forms.Form):
 
