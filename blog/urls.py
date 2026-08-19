@@ -1,6 +1,12 @@
 from django.urls import path
 
-from .views import RecordListView, RecordDetailView, RecordCreateView, RecordUpdateView, RecordDeleteView
+from .views import (
+    RecordListView,
+    RecordDetailView,
+    RecordCreateView,
+    RecordUpdateView,
+    RecordDeleteView,
+)
 from .apps import BlogConfig
 
 app_name = BlogConfig.name

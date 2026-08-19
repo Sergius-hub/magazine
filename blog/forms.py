@@ -14,7 +14,6 @@ class RecordForm(forms.ModelForm):
                     "placeholder": "Введите название блога",
                 }
             ),
-
             "content": forms.Textarea(
                 attrs={
                     "class": "form-control",
@@ -22,20 +21,16 @@ class RecordForm(forms.ModelForm):
                     "rows": 4,
                 }
             ),
-
             "image": forms.ClearableFileInput(
                 attrs={
                     "class": "form-control",
                 }
             ),
-
             "is_active": forms.CheckboxInput(
                 attrs={
                     "class": "form-check-input",
-
                 }
             ),
-
             "count_views": forms.NumberInput(
                 attrs={
                     "class": "form-control",

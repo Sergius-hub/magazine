@@ -2,7 +2,18 @@ from django import forms
 from .models import Product
 from django.core.exceptions import ValidationError
 
-BLACK_LIST = ["казино", "биржа", "обман", "криптовалюта", "дешево", "полиция", "крипта", "бесплатно", "радар"]
+BLACK_LIST = [
+    "казино",
+    "биржа",
+    "обман",
+    "криптовалюта",
+    "дешево",
+    "полиция",
+    "крипта",
+    "бесплатно",
+    "радар",
+]
+
 
 class ProductForm(forms.ModelForm):
     class Meta:
@@ -16,7 +27,6 @@ class ProductForm(forms.ModelForm):
                     "placeholder": "Введите название товара",
                 }
             ),
-
             "description": forms.Textarea(
                 attrs={
                     "class": "form-control",
@@ -24,19 +34,16 @@ class ProductForm(forms.ModelForm):
                     "rows": 4,
                 }
             ),
-
             "image": forms.ClearableFileInput(
                 attrs={
                     "class": "form-control",
                 }
             ),
-
             "category": forms.Select(
                 attrs={
                     "class": "form-select",
                 }
             ),
-
             "price": forms.NumberInput(
                 attrs={
                     "class": "form-control",
@@ -72,12 +79,13 @@ class ProductForm(forms.ModelForm):
             raise ValidationError("Цена не должна быть отрицательной")
         return price
 
+
 class ContactForm(forms.Form):
 
     name = forms.CharField(
-        max_length = 150,
+        max_length=150,
         required=True,
-        widget = forms.TextInput(
+        widget=forms.TextInput(
             attrs={
                 "id": "name",
                 "class": "form-control",
@@ -87,16 +95,16 @@ class ContactForm(forms.Form):
     )
 
     phone = forms.CharField(
-        max_length = 30,
+        max_length=30,
         required=True,
-        widget = forms.TextInput(
+        widget=forms.TextInput(
             attrs={
                 "id": "phone",
                 "type": "tel",
                 "class": "form-control",
                 "placeholder": "Контактный телефон",
             }
-        )
+        ),
     )
 
     message = forms.CharField(
@@ -109,4 +117,3 @@ class ContactForm(forms.Form):
             }
         ),
     )
-

@@ -15,6 +15,10 @@
                 <p class="card-text">{{ product.description | truncatechars:100 }}</p>
                 <a class="btn btn-lg btn-block btn-outline-primary"
                    href="{% url 'catalog:product_detail' product.pk %}">Предпросмотр</a>
+                <a class="btn btn-lg btn-block btn-outline-primary"
+                   href="{% url 'catalog:product_update' product.pk %}">Редактировать</a>
+                <a class="btn btn-lg btn-block btn-outline-primary"
+                   href="{% url 'catalog:product_delete' product.pk %}">Удалить</a>
 
             </div>
         </div>
