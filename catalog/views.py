@@ -68,7 +68,7 @@ class UpdateProductView(UpdateView):
     def get_success_url(self):
         return reverse("catalog:product_detail", args=[self.object.pk])
 
-
+# Удаление продукта
 class DeleteProductView(DeleteView):
     model = Product
     success_url = reverse_lazy("catalog:home")
