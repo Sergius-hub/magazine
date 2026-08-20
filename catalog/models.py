@@ -18,7 +18,10 @@ class Category(models.Model):
 
 class Product(models.Model):
     category = models.ForeignKey(
-        Category, on_delete=models.CASCADE, related_name="products", verbose_name="Категория"
+        Category,
+        on_delete=models.CASCADE,
+        related_name="products",
+        verbose_name="Категория",
     )
     name = models.CharField(max_length=150, verbose_name="Наименование")
     description = models.TextField(verbose_name="Описание", blank=True)
