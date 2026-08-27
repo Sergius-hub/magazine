@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'catalog',
     'easy_thumbnails',
     'blog',
+    'users',
 ]
 
 # Настройки для картинок
@@ -137,9 +138,11 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/6.0/howto/static-files/
 
 STATIC_URL = 'static/'
-
 STATICFILES_DIRS = [ BASE_DIR / 'static', ]
 
 # Media
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+# Аутентификация
+AUTH_USER_MODEL = 'users.User'
