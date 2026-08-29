@@ -38,6 +38,21 @@ class UserManager(BaseUserManager):
 
 class User(AbstractUser):
     """ Кастомная модель пользователя """
+    username = models.CharField(
+        "username",
+        max_length=150,
+        unique=True,
+        help_text="Обязательное поле. Максимальная длина не более 150 символов. Только: буквы, цифры и @/./+/-/_.",
+        error_messages={
+            "unique": "Пользователь с таким именем уже существует.",
+        },
+    )
+
+    email = models.EmailField(
+        unique=True,
+        verbose_name="Email",
+    )
+
     avatar = models.ImageField(
         upload_to="images/users/avatars/",
         blank=True,
@@ -59,12 +74,7 @@ class User(AbstractUser):
         verbose_name="Страна",
     )
 
-    email = models.EmailField(
-        unique=True,
-        verbose_name="Email",
-    )
-
-    # Кастомный менеджер
+    # Использование кастомного менеджера
     objects = UserManager()
 
     USERNAME_FIELD = 'email'
