@@ -162,7 +162,6 @@ DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
 
 # Для редиректа не авторизованных пользователей
 LOGIN_URL = '/users/login/'
-LOGOUT_URL = '/users/logout/'
 
 
 
