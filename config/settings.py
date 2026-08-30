@@ -160,7 +160,9 @@ EMAIL_HOST_USER = "tv-buy1@yandex.ru"
 EMAIL_HOST_PASSWORD = os.getenv("EMAIL_HOST_PASSWORD")
 DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
 
-
+# Для редиректа не авторизованных пользователей
+LOGIN_URL = '/users/login/'
+LOGOUT_URL = '/users/logout/'
 
 
 
