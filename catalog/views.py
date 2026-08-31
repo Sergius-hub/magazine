@@ -1,4 +1,5 @@
 from django.contrib import messages
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic import (
     ListView,
     DetailView,
@@ -30,7 +31,7 @@ class ProductDetailView(DetailView):
 
 
 # Создание продукта
-class CreateProductView(CreateView):
+class CreateProductView(LoginRequiredMixin, CreateView):
     model = Product
     template_name = "catalog/product_form.html"
     form_class = ProductForm
@@ -49,7 +50,7 @@ class CreateProductView(CreateView):
 
 
 # Редактирование продукта
-class UpdateProductView(UpdateView):
+class UpdateProductView(LoginRequiredMixin, UpdateView):
     model = Product
     template_name = "catalog/product_form.html"
     form_class = ProductForm
@@ -69,7 +70,7 @@ class UpdateProductView(UpdateView):
         return reverse("catalog:product_detail", args=[self.object.pk])
 
 # Удаление продукта
-class DeleteProductView(DeleteView):
+class DeleteProductView(LoginRequiredMixin, DeleteView):
     model = Product
     success_url = reverse_lazy("catalog:home")
 
