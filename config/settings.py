@@ -10,6 +10,8 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/6.0/ref/settings/
 """
 import os
+
+from django.urls import reverse_lazy
 from dotenv import load_dotenv
 from pathlib import Path
 
@@ -161,7 +163,7 @@ EMAIL_HOST_PASSWORD = os.getenv("EMAIL_HOST_PASSWORD")
 DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
 
 # Для редиректа не авторизованных пользователей
-LOGIN_URL = '/users/login/'
+LOGIN_URL = reverse_lazy("users:login")
 
 
 
