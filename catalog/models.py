@@ -1,4 +1,5 @@
 from django.db import models
+from users.models import User
 
 # Create your models here.
 
@@ -26,6 +27,15 @@ class Product(models.Model):
         (STATUS_PUBLISHED, "Опубликован"),
         (STATUS_ARCHIVED, "В архиве"),
     ]
+
+    owner = models.ForeignKey(
+        User,
+        on_delete=models.CASCADE,
+        related_name="products",
+        null=True,
+        blank=True,
+        verbose_name="Владелец",
+    )
 
     category = models.ForeignKey(
         Category,
