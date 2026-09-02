@@ -57,11 +57,27 @@ class UpdateProductView(LoginRequiredMixin, UpdateView):
     # success_url = reverse_lazy("catalog:success")
 
     def form_valid(self, form):
+        # Проверка прав
+        user = self.request.user
+        original_status = self.object.status
+        new_status = form.cleaned_data.get("status")
+
+
+        # Если нет права can_publish_product — блокируем ВСЁ
+        if not user.has_perm('catalog.can_unpublish_product'):
+            form.add_error("status", "У вас нет прав на изменение статуса")
+            return self.form_invalid(form)
+
+        # Если право есть — можно только на STATUS_ARCHIVED
+        if new_status != self.model.STATUS_ARCHIVED:
+            form.add_error("status", "Вы можете только архивировать продукт")
+            return self.form_invalid(form)
+
         name = form.cleaned_data.get("name")
 
         # Здесь можно отправить письмо, сохранить в файл,
         # отправить данные в Telegram, CRM и т.д.
-        print(name)
+        # print(name)
 
         messages.success(self.request, f"{name} успешно обновлен")
         return super().form_valid(form)
