@@ -32,7 +32,7 @@ class StyleFormMixin:
 class ProductForm(StyleFormMixin, forms.ModelForm):
     class Meta:
         model = Product
-        fields = ("name", "description", "image", "category", "price")
+        fields = ( "name", "description", "image", "category", "price", "status")
 
         widgets = {
             "name": forms.TextInput(
@@ -54,6 +54,7 @@ class ProductForm(StyleFormMixin, forms.ModelForm):
                     "placeholder": "0.00",
                 }
             ),
+            # "status": forms.Select(),
         }
 
         labels = {
