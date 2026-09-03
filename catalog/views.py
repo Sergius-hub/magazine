@@ -14,7 +14,7 @@ from django.urls import reverse_lazy, reverse
 
 from .models import Product
 from .forms import ContactForm, ProductForm
-
+from .mixins import OwnerOrModeratorRequiredMixin, OwnerRequiredMixin
 
 # Просмотр
 class ProductsListView(ListView):
@@ -38,6 +38,9 @@ class CreateProductView(LoginRequiredMixin, CreateView):
     success_url = reverse_lazy("catalog:success")
 
     def form_valid(self, form):
+        # Привязываем текущего пользователя к продукту ДО сохранения
+        form.instance.owner = self.request.user
+
         name = form.cleaned_data["name"]
         description = form.cleaned_data["description"]
         image = form.cleaned_data["image"]
@@ -50,7 +53,7 @@ class CreateProductView(LoginRequiredMixin, CreateView):
 
 
 # Редактирование продукта
-class UpdateProductView(LoginRequiredMixin, UpdateView):
+class UpdateProductView(LoginRequiredMixin, OwnerRequiredMixin, UpdateView):
     model = Product
     template_name = "catalog/product_form.html"
     form_class = ProductForm
@@ -86,10 +89,22 @@ class UpdateProductView(LoginRequiredMixin, UpdateView):
         return reverse("catalog:product_detail", args=[self.object.pk])
 
 # Удаление продукта
-class DeleteProductView(LoginRequiredMixin, DeleteView):
+class DeleteProductView(LoginRequiredMixin, OwnerOrModeratorRequiredMixin, DeleteView):
     model = Product
+    template_name = "catalog/product_confirm_delete.html"
     success_url = reverse_lazy("catalog:home")
+    moderator_permission = 'catalog.delete_product'
 
+    def form_valid(self, form):
+        # Запоминаем имя до удаления
+        product_name = self.object.name
+
+        # Выполняем стандартное удаление
+        response = super().form_valid(form)
+
+        # Показываем сообщение
+        messages.success(self.request, f"Продукт '{product_name}' удалён")
+        return response
 
 # Просмотр контактов и формы
 class ContactsView(FormView):
