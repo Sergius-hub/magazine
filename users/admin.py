@@ -1,12 +1,13 @@
 from django.contrib import admin
+from django.contrib.auth.admin import UserAdmin
 from .models import User
 
 @admin.register(User)
-class UserAdmin(admin.ModelAdmin):
+class UserAdmin(UserAdmin):
     list_display = (
         "id",
         "username",
-        "password",
+        "email",
         "first_name",
         "last_name",
         "last_login",
@@ -17,5 +18,20 @@ class UserAdmin(admin.ModelAdmin):
         "avatar",
         "phone",
         "country",
-        "email",
+    )
+
+    filter_horizontal = ("groups", "user_permissions")
+
+    # Поля для редактирования пользователя
+    fieldsets = UserAdmin.fieldsets + (
+        ("Дополнительно", {
+            "fields": ("avatar", "phone", "country")
+        }),
+    )
+
+    # Поля при создании пользователя
+    add_fieldsets = UserAdmin.add_fieldsets + (
+        ("Дополнительно", {
+            "fields": ("avatar", "phone", "country")
+        }),
     )
