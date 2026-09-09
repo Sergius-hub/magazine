@@ -28,4 +28,5 @@ urlpatterns = [
         "products/<int:pk>/delete/", DeleteProductView.as_view(), name="product_delete"
     ),
     path("categories/", CategoryListView.as_view(), name="category_list"),
+    path("categories/<int:pk>/", CategoryProductsView.as_view(), name="category_products"),
 ]
