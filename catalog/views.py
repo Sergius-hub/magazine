@@ -26,22 +26,28 @@ class ProductsListView(ListView):
     context_object_name = "products"
 
 # Просмотр по категории
+
+class CategoryListView(ListView):
+    model = Category
+    template_name = "catalog/category_list.html"
+
+
 class CategoryProductsView(ListView):
     model = Product
     template_name = "catalog/category_products.html"
     context_object_name = "products"
     paginate_by = 12
 
-    def get_queryset(self):
-        self.category = get_object_or_404(
-            Category, pk=self.kwargs['pk']
-        )
-        return ProductService.get_products_by_category(self.category.pk)
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['category'] = self.category
-        return context
+    # def get_queryset(self):
+    #     self.category = get_object_or_404(
+    #         Category, pk=self.kwargs['pk']
+    #     )
+    #     return ProductService.get_products_by_category(self.category.pk)
+    #
+    # def get_context_data(self, **kwargs):
+    #     context = super().get_context_data(**kwargs)
+    #     context['category'] = self.category
+    #     return context
 
 # Детальный просмотр
 @method_decorator(cache_page(60 * 15), name='dispatch')
