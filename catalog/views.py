@@ -1,3 +1,6 @@
+from django.shortcuts import get_object_or_404
+from django.views.decorators.cache import cache_page
+from django.utils.decorators import method_decorator
 from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic import (
@@ -11,8 +14,8 @@ from django.views.generic import (
 from django.views.generic.edit import FormView
 from django.urls import reverse_lazy, reverse
 
-
-from .models import Product
+from .services import ProductService
+from .models import Product, Category
 from .forms import ContactForm, ProductForm
 from .mixins import OwnerOrModeratorRequiredMixin, OwnerRequiredMixin
 
@@ -22,8 +25,26 @@ class ProductsListView(ListView):
     template_name = "catalog/home.html"
     context_object_name = "products"
 
+# Просмотр по категории
+class CategoryProductsView(ListView):
+    model = Product
+    template_name = "catalog/category_products.html"
+    context_object_name = "products"
+    paginate_by = 12
+
+    def get_queryset(self):
+        self.category = get_object_or_404(
+            Category, pk=self.kwargs['pk']
+        )
+        return ProductService.get_products_by_category(self.category.pk)
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['category'] = self.category
+        return context
 
 # Детальный просмотр
+@method_decorator(cache_page(60 * 15), name='dispatch')
 class ProductDetailView(DetailView):
     model = Product
     template_name = "catalog/product_detail.html"
