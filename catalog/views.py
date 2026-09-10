@@ -92,16 +92,19 @@ class UpdateProductView(LoginRequiredMixin, OwnerRequiredMixin, UpdateView):
     model = Product
     template_name = "catalog/product_form.html"
     form_class = ProductForm
-    # success_url = reverse_lazy("catalog:success")
+    # success_url = reverse_lazy("catalog:success") # Комментируем потому что переопределен метод "get_success_url(self)"
 
     def form_valid(self, form):
         # Проверка прав
         user = self.request.user
+
+        # Статус продукта
         original_status = self.object.status
+
+        # Статус продукта из формы
         new_status = form.cleaned_data.get("status")
 
-
-        # Если нет права can_publish_product — блокируем ВСЁ
+        # Если нет права can_unpublish_product — блокируем ВСЁ
         if not user.has_perm('catalog.can_unpublish_product'):
             form.add_error("status", "У вас нет прав на изменение статуса")
             return self.form_invalid(form)
