@@ -1,6 +1,7 @@
 from django.shortcuts import get_object_or_404
 from django.views.decorators.cache import cache_page
 from django.utils.decorators import method_decorator
+from django.core.cache import cache
 from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic import (
@@ -19,19 +20,26 @@ from .models import Product, Category
 from .forms import ContactForm, ProductForm
 from .mixins import OwnerOrModeratorRequiredMixin, OwnerRequiredMixin
 
-# Просмотр
+# Просмотр продуктов
 class ProductsListView(ListView):
     model = Product
     template_name = "catalog/home.html"
     context_object_name = "products"
 
-# Просмотр по категории
+    def get_queryset(self):
+        queryset = cache.get('products_queryset')
+        if not queryset:
+            queryset = super().get_queryset()
+            cache.set('products_queryset', queryset, 60 * 15)
+        return queryset
 
+# Просмотр по категории
 class CategoryListView(ListView):
     model = Category
     template_name = "catalog/category_list.html"
     context_object_name = "categories"
 
+# Просмотр товаров по категориям
 class CategoryProductsView(ListView):
     model = Product
     template_name = "catalog/category_products.html"
