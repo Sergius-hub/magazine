@@ -171,6 +171,6 @@ LOGIN_URL = reverse_lazy("users:login")
 CACHES = {
     'default': {
         'BACKEND': 'django.core.cache.backends.redis.RedisCache',
-        'LOCATION': 'redis://127.0.0.1:6379/1',
+        'LOCATION': os.getenv("CACHE_LOCATION"), #'redis://127.0.0.1:6379/1',
     }
 }
