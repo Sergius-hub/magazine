@@ -1,3 +1,7 @@
+from django.shortcuts import get_object_or_404
+from django.views.decorators.cache import cache_page
+from django.utils.decorators import method_decorator
+from django.core.cache import cache
 from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic import (
@@ -11,19 +15,50 @@ from django.views.generic import (
 from django.views.generic.edit import FormView
 from django.urls import reverse_lazy, reverse
 
-
-from .models import Product
+from .services import ProductService
+from .models import Product, Category
 from .forms import ContactForm, ProductForm
 from .mixins import OwnerOrModeratorRequiredMixin, OwnerRequiredMixin
 
-# Просмотр
+# Просмотр продуктов
 class ProductsListView(ListView):
     model = Product
     template_name = "catalog/home.html"
     context_object_name = "products"
 
+    def get_queryset(self):
+        queryset = cache.get('products_queryset')
+        if not queryset:
+            queryset = super().get_queryset()
+            cache.set('products_queryset', queryset, 60 * 15)
+        return queryset
+
+# Просмотр по категории
+class CategoryListView(ListView):
+    model = Category
+    template_name = "catalog/category_list.html"
+    context_object_name = "categories"
+
+# Просмотр товаров по категориям
+class CategoryProductsView(ListView):
+    model = Product
+    template_name = "catalog/category_products.html"
+    context_object_name = "products"
+    paginate_by = 12
+
+    def get_queryset(self):
+        self.category = get_object_or_404(
+            Category, pk=self.kwargs['pk']
+        )
+        return ProductService.get_products_by_category(self.category.pk)
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['category'] = self.category
+        return context
 
 # Детальный просмотр
+@method_decorator(cache_page(60 * 15), name='dispatch')
 class ProductDetailView(DetailView):
     model = Product
     template_name = "catalog/product_detail.html"
@@ -57,16 +92,19 @@ class UpdateProductView(LoginRequiredMixin, OwnerRequiredMixin, UpdateView):
     model = Product
     template_name = "catalog/product_form.html"
     form_class = ProductForm
-    # success_url = reverse_lazy("catalog:success")
+    # success_url = reverse_lazy("catalog:success") # Комментируем потому что переопределен метод "get_success_url(self)"
 
     def form_valid(self, form):
         # Проверка прав
         user = self.request.user
+
+        # Статус продукта
         original_status = self.object.status
+
+        # Статус продукта из формы
         new_status = form.cleaned_data.get("status")
 
-
-        # Если нет права can_publish_product — блокируем ВСЁ
+        # Если нет права can_unpublish_product — блокируем ВСЁ
         if not user.has_perm('catalog.can_unpublish_product'):
             form.add_error("status", "У вас нет прав на изменение статуса")
             return self.form_invalid(form)

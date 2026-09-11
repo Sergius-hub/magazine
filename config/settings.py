@@ -15,6 +15,8 @@ from django.urls import reverse_lazy
 from dotenv import load_dotenv
 from pathlib import Path
 
+load_dotenv()
+
 # from django.conf.global_settings import STATICFILES_DIRS
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -92,7 +94,6 @@ WSGI_APPLICATION = 'config.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/6.0/ref/settings/#databases
 
-load_dotenv()
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
@@ -166,4 +167,10 @@ DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
 LOGIN_URL = reverse_lazy("users:login")
 
 
-
+# Кэширование
+CACHES = {
+    'default': {
+        'BACKEND': 'django.core.cache.backends.redis.RedisCache',
+        'LOCATION': os.getenv("CACHE_LOCATION"), #'redis://127.0.0.1:6379/1',
+    }
+}

@@ -1,0 +1,29 @@
+{% extends "catalog/base.html" %}
+{% load thumbnail %}
+{% block content %}
+<div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-4 text-center">
+    {% for product in products %}
+    <div class="col">
+        <div class="card mb-4 box-shadow">
+            <div class="card-header">
+                <h4 class="my-0 font-weight-normal">{{ product.name }}</h4>
+            </div>
+            <div class="card-body">
+                <img src="{{ product.image | thumbnail_url:'small' }}">
+                <h1 class="card-title pricing-card-title">{{ product.price }} руб. </h1>
+                <p class="card-text">{{ product.description | truncatechars:100 }}</p>
+                <a class="btn btn-lg btn-block btn-outline-primary"
+                   href="{% url 'catalog:product_detail' product.pk %}">Предпросмотр</a>
+                {% if user == product.owner %}
+                <a class="btn btn-lg btn-block btn-outline-primary"
+                   href="{% url 'catalog:product_update' product.pk %}">Редактировать</a>
+                <a class="btn btn-lg btn-block btn-outline-primary"
+                   href="{% url 'catalog:product_delete' product.pk %}">Удалить</a>
+                {% endif %}
+
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}
