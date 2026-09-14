@@ -99,7 +99,7 @@ class Mailing(models.Model):
         verbose_name_plural = "Рассылки"
         ordering = ["-start_time"]
 
-    def __str__( self ):
+    def __str__(self):
         return f"Рассылка от {self.start_time:%d.%m.%Y %H:%M}"
 
     def update_status(self):
