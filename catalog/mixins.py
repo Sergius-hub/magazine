@@ -1,4 +1,6 @@
 from django.forms import BooleanField
+from django.forms.widgets import Select, RadioSelect, CheckboxSelectMultiple
+
 
 class OwnerRequiredMixin:
     """Только владелец может получить доступ к объекту."""
