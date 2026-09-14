@@ -1,3 +1,5 @@
+from django.forms import BooleanField
+
 class OwnerRequiredMixin:
     """Только владелец может получить доступ к объекту."""
 
@@ -21,3 +23,16 @@ class OwnerOrModeratorRequiredMixin:
 
         # Остальные — только свои
         return queryset.filter(owner=user)
+
+
+
+class StyleFormMixin:
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        for field_name, field in self.fields.items():
+            if isinstance(field, BooleanField):
+                field.widget.attrs["class"] = "form-check-input"
+            elif isinstance(field.widget, Select):
+                field.widget.attrs["class"] = "form-select"
+            else:
+                field.widget.attrs["class"] = "form-control"
