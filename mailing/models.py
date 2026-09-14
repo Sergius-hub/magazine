@@ -1,9 +1,9 @@
 from django.db import models
-
-# Create your models here.
+from django.utils import timezone
+from django.core.exceptions import ValidationError
 
 class Recipient(models.Model):
-
+    """Модель получателя рассылки"""
     email = models.EmailField(
         unique=True,
         verbose_name="Email",
@@ -13,13 +13,11 @@ class Recipient(models.Model):
         max_length=150,
         verbose_name="Ф.И.О",
         blank=True,
-        null=True,
     )
 
     comments = models.TextField(
         verbose_name="Комментарии",
         blank=True,
-        null=True,
     )
 
     def __str__(self):
@@ -28,23 +26,30 @@ class Recipient(models.Model):
     class Meta:
         verbose_name = "Получатель"
         verbose_name_plural = "Получатели"
-        ordering = ["id"]
+        ordering = ["-id"]
 
 
 class Message(models.Model):
-
+    """Модель сообщения"""
     subject = models.CharField(
         max_length=150,
         verbose_name="Тема письма"
     )
 
-    message = models.TextField(
-        verbose_name="Тело писма"
+    body = models.TextField(
+        verbose_name="Тело письма"
     )
 
+    class Meta:
+        verbose_name = "Сообщение"
+        verbose_name_plural = "Сообщения"
+        ordering = ["-id"]
+
+    def __str__(self):
+        return self.subject
 
 class Mailing(models.Model):
-
+    """Модель рассылки"""
     STATUS_CREATED = "created"
     STATUS_STARTED = "started"
     STATUS_FINISHED = "finished"
@@ -56,10 +61,15 @@ class Mailing(models.Model):
     ]
 
     start_time = models.DateTimeField(
-        auto_now_add=True,
+        "Дата и время начала",
     )
 
     end_time = models.DateTimeField(
+        "Дата и время окончания",
+    )
+
+    created_at = models.DateTimeField(
+        verbose_name="Создана",
         auto_now_add=True,
     )
 
@@ -67,7 +77,7 @@ class Mailing(models.Model):
         max_length=20,
         choices=STATUS_CHOICES,
         default=STATUS_CREATED,
-        verbose_name="Статус публикации"
+        verbose_name="Статус рассылки"
     )
 
     message = models.ForeignKey(
@@ -92,13 +102,50 @@ class Mailing(models.Model):
     def __str__( self ):
         return f"Рассылка от {self.start_time:%d.%m.%Y %H:%M}"
 
-    def update_status(self, status):
+    def update_status(self):
         """
         Пересчитывает статус и сохраняет в БД, если он изменился.
         """
-        pass
+        now = timezone.now()
+        new_status = None
 
-# mailings/models.py
+        if now < self.start_time:
+            new_status = self.STATUS_CREATED
+        elif now <= self.end_time:
+            new_status = self.STATUS_STARTED
+        else:
+            new_status = self.STATUS_FINISHED
+
+        if new_status and self.status != new_status:
+            self.status = new_status
+            # Сохраняем только поле статуса, не трогая остальные
+            self.save(update_fields=["status"])
+
+        return self.status
+
+    def clean(self):
+        """
+        Валидация на уровне модели.
+        Вызывается при использовании ModelForm и в админке.
+        """
+        super().clean()
+
+        now = timezone.now()
+
+        # Проверка 1: start_time не может быть в прошлом
+        if self.start_time and self.start_time < now:
+            raise ValidationError(
+                "Дата начала рассылки не может быть в прошлом"
+            )
+
+        # Проверка 2: start_time должен быть раньше end_time
+        if self.start_time and self.end_time:
+            if self.start_time >= self.end_time:
+                raise ValidationError(
+                    "Дата начала должна быть раньше даты окончания"
+                )
+
+
 class MailingAttempt(models.Model):
     """Запись о попытке отправки рассылки."""
 
@@ -110,15 +157,18 @@ class MailingAttempt(models.Model):
         "Дата и время попытки",
         auto_now_add=True,
     )
+
     status = models.CharField(
         "Статус",
         max_length=20,
         choices=Status.choices,
     )
+
     server_response = models.TextField(
         "Ответ почтового сервера",
         blank=True,
     )
+
     mailing = models.ForeignKey(
         Mailing,
         on_delete=models.CASCADE,
