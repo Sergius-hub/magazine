@@ -2,8 +2,6 @@
 
 from django.db import migrations
 
-from django.db import migrations
-
 # Миграция
 def create_moderators_group(apps, schema_editor):
     Group = apps.get_model('auth', 'Group')
