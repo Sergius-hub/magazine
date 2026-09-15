@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from .models import Mailing, Message
+from .models import Mailing, Message, Recipient
 
 # Админка для списка рассылок (Mailing)
 @admin.register(Mailing)
@@ -33,5 +33,16 @@ class MessageAdmin(admin.ModelAdmin):
     list_display = ('subject', 'body')
     # Поиск по статусу
     search_fields = ('subject', 'body')
+    # Сортировка по умолчанию
+    ordering = ('-id',)
+
+
+# Админка для получателя рассылки (Recipient)
+@admin.register(Recipient)
+class RecipientAdmin(admin.ModelAdmin):
+    # Поля отображаемые в списке объектов
+    list_display = ('email', 'full_name', 'comments')
+    # Поиск по статусу
+    search_fields = ('email',)
     # Сортировка по умолчанию
     ordering = ('-id',)

@@ -18,7 +18,6 @@ class ProductAdmin(admin.ModelAdmin):
         "name",
         "formatted_date",
         "category",
-        "description",
         "price",
         "image",
     )
