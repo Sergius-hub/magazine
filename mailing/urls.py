@@ -5,7 +5,9 @@ from . import views
 app_name = MailingConfig.name
 
 urlpatterns = [
-    # Статистика
-    path("", views.StatisticView.as_view(), name="statistic"),
+    # Главная
+    path("mailing/", views.MailingView.as_view(), name="mailing"),
 
+    # Рассылки
+    path("mailings/create/", views.MailingCreateView.as_view(), name="mailing_create"),
 ]

@@ -8,13 +8,14 @@ from django.views.generic import (
     DeleteView,
 )
 
-from .models import Recipient, Message, Mailing
+from .forms import MailingForm
+from .models import Mailing
 from .services import MailingService
 
-class StatisticView(TemplateView):
+class MailingView(TemplateView):
     """Страница со статистикой по рассылкам."""
 
-    template_name = "mailing/statistic.html"
+    template_name = "mailing/mailing.html"
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -26,3 +27,10 @@ class StatisticView(TemplateView):
         context["total_recipients"] = stats["total_recipients"]
 
         return context
+
+class MailingCreateView(CreateView):
+
+    model = Mailing
+    form_class = MailingForm
+    template_name = "mailing/mailing_form.html"
+

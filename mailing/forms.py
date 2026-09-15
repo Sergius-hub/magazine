@@ -6,7 +6,7 @@ from catalog.mixins import StyleFormMixin
 class RecipientForm(StyleFormMixin, forms.ModelForm):
     class Meta:
         model = Recipient
-        feilds = ("email", "full_name", "comments")
+        fields = ("email", "full_name", "comments")
         widgets = {
             "email": forms.TextInput(
                 attrs={
