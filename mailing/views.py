@@ -42,7 +42,7 @@ class MailingListview(ListView):
             .annotate(recipients_count=Count("recipients", distinct=True))
         )
 
-
+# CRUD mailing
 class MailingCreateView(CreateView):
     """Добавление новой рассылки."""
     model = Mailing
@@ -52,6 +52,22 @@ class MailingCreateView(CreateView):
     def get_success_url(self):
         return reverse_lazy("mailing:mailing")
 
+class MailingUpdateView(UpdateView):
+    """Редактирование рассылки."""
+    model = Mailing
+    form_class = MailingForm
+    template_name = "mailing/mailing_form.html"
+
+    def get_success_url(self):
+        return reverse_lazy("mailing:mailing_list")
+
+class MailingDeleteView(DeleteView):
+    """Удаление рассылки."""
+    model = Mailing
+    template_name = "mailing/mailing_confirm_delete.html"
+
+    def get_success_url(self):
+        return reverse_lazy("mailing:mailing_list")
 
 class RecipientCreateView(CreateView):
     """Добавление нового получателя."""
@@ -61,7 +77,6 @@ class RecipientCreateView(CreateView):
 
     def get_success_url(self):
         return reverse_lazy("mailing:mailing")
-
 
 class MessageCreateView(CreateView):
     """Добавление нового сообщения для рассылки."""
