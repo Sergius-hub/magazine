@@ -48,7 +48,7 @@ class MessageForm(StyleFormMixin, forms.ModelForm):
 class MailingForm(StyleFormMixin, forms.ModelForm):
     class Meta:
         model = Mailing
-        fields = ("start_time", "end_time", "status")
+        fields = ("start_time", "end_time", "message", "recipients")
         widgets = {
             "start_time": forms.DateTimeInput(
                 attrs={
@@ -63,7 +63,7 @@ class MailingForm(StyleFormMixin, forms.ModelForm):
             "message": forms.Select(),
             "recipients": forms.SelectMultiple(
                 attrs={
-                    "size" : 10,
+                    "size" : 8,
                 }
             ),
         }

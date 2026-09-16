@@ -21,7 +21,7 @@ class Recipient(models.Model):
     )
 
     def __str__(self):
-        return self.email
+        return f"Получатель: {self.full_name}, эл.почта: {self.email}."
 
     class Meta:
         verbose_name = "Получатель"
@@ -46,7 +46,7 @@ class Message(models.Model):
         ordering = ["-id"]
 
     def __str__(self):
-        return self.subject
+        return f"{self.subject}, текст: \"{self.body}\"."
 
 class Mailing(models.Model):
     """Модель рассылки"""
@@ -100,7 +100,7 @@ class Mailing(models.Model):
         ordering = ["-start_time"]
 
     def __str__(self):
-        return f"Рассылка от {self.start_time:%d.%m.%Y %H:%M}"
+        return f"Рассылка от {self.created_at:%d.%m.%Y %H:%M}, старт: {self.start_time:%d.%m.%Y %H:%M}, конец: {self.end_time:%d.%m.%Y %H:%M}, статус: {self.status}"
 
     def update_status(self):
         """

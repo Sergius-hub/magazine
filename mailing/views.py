@@ -1,4 +1,6 @@
 from django.shortcuts import get_object_or_404
+from django.db.models import Count
+from django.urls import reverse_lazy
 from django.views.generic import (
     ListView,
     DetailView,
@@ -8,12 +10,12 @@ from django.views.generic import (
     DeleteView,
 )
 
-from .forms import MailingForm
-from .models import Mailing
+from .forms import MailingForm, RecipientForm, MessageForm
+from .models import Mailing, Recipient, Message
 from .services import MailingService
 
 class MailingView(TemplateView):
-    """Страница со статистикой по рассылкам."""
+    """Рендерит страницу со статистикой по рассылкам."""
 
     template_name = "mailing/mailing.html"
 
@@ -28,9 +30,46 @@ class MailingView(TemplateView):
 
         return context
 
-class MailingCreateView(CreateView):
+class MailingListview(ListView):
+    """Просмотр списка рассылок."""
+    model = Mailing
+    template_name = "mailing/mailing_list.html"
+    #context_object_name = ""
 
+    def get_queryset(self):
+        return (
+            super().get_queryset()
+            .annotate(recipients_count=Count("recipients", distinct=True))
+        )
+
+
+class MailingCreateView(CreateView):
+    """Добавление новой рассылки."""
     model = Mailing
     form_class = MailingForm
     template_name = "mailing/mailing_form.html"
+
+    def get_success_url(self):
+        return reverse_lazy("mailing:mailing")
+
+
+class RecipientCreateView(CreateView):
+    """Добавление нового получателя."""
+    model = Recipient
+    form_class = RecipientForm
+    template_name = "mailing/recipient_form.html"
+
+    def get_success_url(self):
+        return reverse_lazy("mailing:mailing")
+
+
+class MessageCreateView(CreateView):
+    """Добавление нового сообщения для рассылки."""
+    model = Message
+    form_class = MessageForm
+    template_name = "mailing/message_form.html"
+
+    def get_success_url(self):
+        return reverse_lazy("mailing:mailing")
+
 
