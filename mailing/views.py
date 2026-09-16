@@ -30,19 +30,9 @@ class MailingView(TemplateView):
 
         return context
 
-class MailingListview(ListView):
-    """Просмотр списка рассылок."""
-    model = Mailing
-    template_name = "mailing/mailing_list.html"
-    #context_object_name = ""
 
-    def get_queryset(self):
-        return (
-            super().get_queryset()
-            .annotate(recipients_count=Count("recipients", distinct=True))
-        )
 
-# CRUD mailing
+# CRUD - mailing
 class MailingCreateView(CreateView):
     """Добавление новой рассылки."""
     model = Mailing
@@ -51,6 +41,17 @@ class MailingCreateView(CreateView):
 
     def get_success_url(self):
         return reverse_lazy("mailing:mailing")
+
+class MailingListview(ListView):
+    """Просмотр списка рассылок."""
+    model = Mailing
+    template_name = "mailing/mailing_list.html"
+
+    def get_queryset(self):
+        return (
+            super().get_queryset()
+            .annotate(recipients_count=Count("recipients", distinct=True))
+        )
 
 class MailingUpdateView(UpdateView):
     """Редактирование рассылки."""
@@ -69,6 +70,7 @@ class MailingDeleteView(DeleteView):
     def get_success_url(self):
         return reverse_lazy("mailing:mailing_list")
 
+# C - Recipient
 class RecipientCreateView(CreateView):
     """Добавление нового получателя."""
     model = Recipient
@@ -78,6 +80,7 @@ class RecipientCreateView(CreateView):
     def get_success_url(self):
         return reverse_lazy("mailing:mailing")
 
+# C - Message
 class MessageCreateView(CreateView):
     """Добавление нового сообщения для рассылки."""
     model = Message
