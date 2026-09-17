@@ -1,6 +1,3 @@
-from django.forms import BooleanField
-from django.forms.widgets import Select, RadioSelect, CheckboxSelectMultiple
-
 
 class OwnerRequiredMixin:
     """Только владелец может получить доступ к объекту."""
@@ -13,7 +10,7 @@ class OwnerRequiredMixin:
 class OwnerOrModeratorRequiredMixin:
     """Владелец или пользователь с правом на удаление."""
 
-    permission = 'catalog.delete_product'
+    permission = 'mailing.delete_mailing'
 
     def get_queryset(self):
         queryset = super().get_queryset()
@@ -25,16 +22,3 @@ class OwnerOrModeratorRequiredMixin:
 
         # Остальные — только свои
         return queryset.filter(owner=user)
-
-
-
-class StyleFormMixin:
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        for field_name, field in self.fields.items():
-            if isinstance(field, BooleanField):
-                field.widget.attrs["class"] = "form-check-input"
-            elif isinstance(field.widget, Select):
-                field.widget.attrs["class"] = "form-select"
-            else:
-                field.widget.attrs["class"] = "form-control"

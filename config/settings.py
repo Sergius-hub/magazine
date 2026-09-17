@@ -49,6 +49,7 @@ INSTALLED_APPS = [
     'easy_thumbnails',
     'blog',
     'users',
+    'mailing',
 ]
 
 # Настройки для картинок
