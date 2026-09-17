@@ -11,6 +11,8 @@ from django.views.generic import (
     UpdateView,
     DeleteView,
 )
+from django.contrib.auth.mixins import LoginRequiredMixin
+from .mixins import OwnerOrModeratorRequiredMixin, OwnerRequiredMixin
 
 from .forms import MailingForm, RecipientForm, MessageForm
 from .models import Mailing, Recipient, Message
@@ -35,7 +37,7 @@ class MailingView(TemplateView):
 
 
 # CRUD - mailing
-class MailingCreateView(CreateView):
+class MailingCreateView(LoginRequiredMixin, CreateView):
     """Добавление новой рассылки."""
     model = Mailing
     form_class = MailingForm
@@ -55,7 +57,7 @@ class MailingListview(ListView):
             .annotate(recipients_count=Count("recipients", distinct=True))
         )
 
-class MailingUpdateView(UpdateView):
+class MailingUpdateView(LoginRequiredMixin, OwnerRequiredMixin, UpdateView):
     """Редактирование рассылки."""
     model = Mailing
     form_class = MailingForm
@@ -64,7 +66,7 @@ class MailingUpdateView(UpdateView):
     def get_success_url(self):
         return reverse_lazy("mailing:mailing_list")
 
-class MailingDeleteView(DeleteView):
+class MailingDeleteView(LoginRequiredMixin, OwnerOrModeratorRequiredMixin, DeleteView):
     """Удаление рассылки."""
     model = Mailing
     template_name = "mailing/mailing_confirm_delete.html"
@@ -73,7 +75,7 @@ class MailingDeleteView(DeleteView):
         return reverse_lazy("mailing:mailing_list")
 
 # C - Recipient
-class RecipientCreateView(CreateView):
+class RecipientCreateView(LoginRequiredMixin, CreateView):
     """Добавление нового получателя."""
     model = Recipient
     form_class = RecipientForm
@@ -83,7 +85,7 @@ class RecipientCreateView(CreateView):
         return reverse_lazy("mailing:mailing")
 
 # C - Message
-class MessageCreateView(CreateView):
+class MessageCreateView(LoginRequiredMixin, OwnerOrModeratorRequiredMixin, CreateView):
     """Добавление нового сообщения для рассылки."""
     model = Message
     form_class = MessageForm
@@ -93,7 +95,7 @@ class MessageCreateView(CreateView):
         return reverse_lazy("mailing:mailing")
 
 # Отправка
-class SendMailingView(View):
+class SendMailingView(LoginRequiredMixin, OwnerOrModeratorRequiredMixin, View):
     """Отправка одной рассылки."""
 
     def post(self, request, pk):
