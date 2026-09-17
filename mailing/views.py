@@ -1,6 +1,8 @@
-from django.shortcuts import get_object_or_404
+from django.contrib import messages
+from django.shortcuts import get_object_or_404, redirect
 from django.db.models import Count
 from django.urls import reverse_lazy
+from django.views import View
 from django.views.generic import (
     ListView,
     DetailView,
@@ -90,4 +92,19 @@ class MessageCreateView(CreateView):
     def get_success_url(self):
         return reverse_lazy("mailing:mailing")
 
+# Отправка
+class SendMailingView(View):
+    """Отправка одной рассылки."""
 
+    def post(self, request, pk):
+        mailing = get_object_or_404(Mailing, pk=pk)
+        mailing.update_status()
+
+        success, message = MailingService.send_mailing(mailing)
+
+        if success:
+            messages.success(request, message)
+        else:
+            messages.error(request, message)
+
+        return redirect("mailing:mailing_list")

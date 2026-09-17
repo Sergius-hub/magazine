@@ -1,6 +1,7 @@
 from django.utils import timezone
-
-from .models import Mailing, Recipient
+from django.conf import settings
+from django.core.mail import send_mail
+from .models import Mailing, Recipient, MailingAttempt
 
 class MailingService:
     """Бизнес-логика сервиса рассылок."""
@@ -47,7 +48,7 @@ class MailingService:
 
                 MailingAttempt.objects.create(
                     mailing=mailing,
-                    status=MailingAttempt.STATUS_SUCCESS,
+                    status=MailingAttempt.Status.SUCCESS,
                     server_response=f"OK: {client.email}",
                 )
                 sent += 1
@@ -55,7 +56,7 @@ class MailingService:
             except Exception as e:
                 MailingAttempt.objects.create(
                     mailing=mailing,
-                    status=MailingAttempt.STATUS_FAILED,
+                    status=MailingAttempt.Status.FAILED,
                     server_response=f"Ошибка: {str( e )}",
                 )
                 failed += 1

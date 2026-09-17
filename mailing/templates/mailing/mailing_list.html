@@ -21,8 +21,13 @@
                    href="{% url 'mailing:mailing_update' mailing.pk %}">Редактировать</a>
                 <a class="btn btn-sm btn-outline-primary"
                    href="{% url 'mailing:mailing_delete' mailing.pk %}">Удалить</a>
-                <a class="btn btn-sm btn-primary"
-                   href="{% url 'mailing:mailing' %}">Отправить</a>
+
+                <form method="post" action="{% url 'mailing:mailing_send' mailing.pk %}">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-sm btn-primary">
+                        Отправить
+                    </button>
+                </form>
             </div>
         </li>
 
