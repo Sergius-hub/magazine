@@ -1,6 +1,22 @@
 from django.contrib import admin
 
-from .models import Mailing, Message, Recipient
+from .models import Mailing, Message, Recipient, MailingAttempt
+
+class ReadOnlyAdminMixin:
+    """Админка только для просмотра: без добавления, изменения и удаления."""
+
+    def has_add_permission(self, request, obj=None):
+        return False
+
+    def has_change_permission(self, request, obj=None):
+        return False
+
+    def has_delete_permission(self, request, obj=None):
+        return False
+
+    def get_readonly_fields(self, request, obj=None):
+        # все поля модели — только для чтения
+        return [f.name for f in self.model._meta.fields]
 
 # Админка для списка рассылок (Mailing)
 @admin.register(Mailing)
@@ -46,3 +62,15 @@ class RecipientAdmin(admin.ModelAdmin):
     search_fields = ('email',)
     # Сортировка по умолчанию
     ordering = ('-id',)
+
+# Админка для попыток отправки (MailingAttempt)
+@admin.register(MailingAttempt)
+class MailingAttemptAdmin(ReadOnlyAdminMixin, admin.ModelAdmin):
+    # Поля отображаемые в списке объектов
+    list_display = ('attempt_time', 'status', 'server_response')
+
+    # Сортировка по умолчанию
+    ordering = ["-attempt_time"]
+
+    # Навигация по датам
+    date_hierarchy = "attempt_time"
